@@ -1,12 +1,10 @@
-// ======== 1. Роли и пользователи
-
 // Таблица пользователей
 Table users {
   id uuid [pk, default: `gen_random_uuid()`]
   role_id uuid [not null, ref: > roles.id]
 
   username varchar(50) [not null, unique]
-  email varchar(255) []
+  email varchar(255) [unique]
   password_hash text [not null]
 
   created_at timestamptz [not null, default: `now()`]
@@ -34,9 +32,6 @@ Table permissions {
   name varchar(100) [NOT NULL, unique]
 }
 
-
-
-// ======= 2. Приложения
 
 // Приложения
 Table applications {
@@ -77,7 +72,6 @@ Table applications_plans {
   }
 }
 
-// ===== Клчюи
 
 // Таблица ключей
 Table keys {
@@ -152,13 +146,13 @@ Table payments {
   }
 }
 
+// Таблица для сохранения заказов
 Table order_items {
   id uuid [pk, default: `gen_random_uuid()`]
 
   order_id uuid [not null, ref: > orders.id]
   plan_id uuid [not null, ref: > applications_plans.id]
 
-  // Assigned after successful payment
   key_id uuid [unique, ref: -? keys.id]
 
   plan_name varchar(100) [not null]
@@ -177,6 +171,7 @@ Table order_items {
   }
 }
 
+// Таблица активаций ключей
 Table activations {
   id uuid [pk, default: `gen_random_uuid()`]
 
