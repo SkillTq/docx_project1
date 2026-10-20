@@ -4,7 +4,7 @@ Table users {
   role_id uuid [not null, ref: > roles.id]
 
   username varchar(50) [not null, unique]
-  email varchar(255) [unique]
+  email varchar(100) [unique]
   password_hash text [not null]
 
   created_at timestamptz [not null, default: `now()`]
@@ -13,13 +13,13 @@ Table users {
 // Таблица ролей, покупатель, поддержка, админ
 Table roles {
   id uuid [pk, default: `gen_random_uuid()`]
-  name varchar(50) [NOT NULL, unique]
+  name varchar(50) [not null, unique]
 }
 
 // Соединяет роли и права для ролей
 Table role_permissions {
-  role_id uuid [NOT NULL, ref: > roles.id]
-  permission_id uuid [NOT NULL, ref: > permissions.id]
+  role_id uuid [not null, ref: > roles.id]
+  permission_id uuid [not null, ref: > permissions.id]
 
   indexes {
     (role_id, permission_id) [pk]
