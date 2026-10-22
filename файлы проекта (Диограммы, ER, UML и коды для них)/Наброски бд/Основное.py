@@ -175,7 +175,7 @@ Table order_items {
 Table activations {
   id uuid [pk, default: `gen_random_uuid()`]
 
-  key_id uuid [not null, ref: > keys.id]
+  key_id uuid [not null, unique, ref: - keys.id]
   user_id uuid [not null, ref: > users.id]
 
   hwid varchar(255) [not null]
